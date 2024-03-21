@@ -1,8 +1,9 @@
+from .models.mbart import MbartModel
+
+
 class Translator:
-    def __init__(self, language: str):
-        self.language = language
+    def __init__(self):
+        self.model = MbartModel()
 
     def translate(self, text: str) -> str:
-        raise NotImplementedError(
-            "This method should be implemented in the child class"
-        )
+        return self.model.translate(text)

@@ -4,11 +4,11 @@ from domain.html_translator import HtmlTranslator
 from domain.translator import Translator
 
 
-def translate_html(root_dir: str | Path, source_language, target_language):
+def translate_html(root_dir: str | Path):
     """Translate HTML content from source language to target language."""
     root_dir = Path(root_dir)
 
-    translator = Translator(source_language)
+    translator = Translator()
     html_parser = HtmlTranslator(translator)
 
     for file in HtmlFinder().find_all(root_dir):

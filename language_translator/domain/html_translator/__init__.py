@@ -11,14 +11,20 @@ class HtmlTranslator:
     def translate(self, file: Path) -> str:
         with open(file, mode="r", encoding="utf-8") as f:
             soup = BeautifulSoup(f, "html.parser")
-            # Find all elements in the HTML
-        for element in soup.find_all():
-            # Process the text of each element (convert all characters to uppercase as a sample)
-            content = element.get_text()
-
+        # Find all text elements in the HTML
+        for content in set(
+            [
+                elm.get_text().strip()
+                for elm in soup.find_all(
+                    ["p", "li", "h1", "h2", "h3", "h4", "h5", "h6"]
+                )
+            ]
+        ):
             if content.strip() != "":
-                # processed_text = self.translator.translate(content)
+                print(f"ja: {content}")
+                print("------------" * 2)
+                translated = self.translator.translate(content)
+                print(f"en: {translated}")
                 # content.replace_with(processed_text)
-                print(content)
                 print("============" * 2)
         return ""
