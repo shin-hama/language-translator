@@ -15,7 +15,7 @@ def translate_html(root_dir: str | Path):
         translated = html_parser.translate(file)
 
         # save translated text to file
-        newFile = root_dir / "target_language" / file.relative_to(root_dir).parent
+        newFile = root_dir / "en" / file.relative_to(root_dir).parent
         newFile.mkdir(parents=True, exist_ok=True)
 
         newFile.write_text(translated)
