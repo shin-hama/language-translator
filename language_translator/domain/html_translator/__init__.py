@@ -13,8 +13,12 @@ class HtmlTranslator:
         with open(file, mode="r", encoding="utf-8-sig") as f:
             soup = BeautifulSoup(f, "html.parser")
         # Find all text elements in the HTML
-        for node in tqdm(soup.find_all(text=True), leave=False):
-            if node.parent.name in ["script", "style"]:
+        for node in tqdm(
+            soup.find_all(text=True),
+            leave=False,
+            desc=soup.title.string if soup.title else None,
+        ):
+            if node.parent.name in ["script", "style", "[document]", "code"]:
                 continue
             if not node.get_text(strip=True):
                 continue

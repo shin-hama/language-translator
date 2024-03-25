@@ -11,5 +11,7 @@ logger.addHandler(handler)
 logger.propagate = False
 
 if __name__ == "__main__":
-    project_root = Path(__file__).parent.parent
-    exec(project_root / "samples", logger)
+    # project_root = Path(__file__).parent.parent
+    # exec(project_root / "samples", logger)
+    root = Path(r"C:\Users\hamada\workspace\FEMTUS\InterfaceDesign\html")
+    exec(root, logger)
