@@ -1,7 +1,7 @@
-from .html_parser import HTMLParser
 from pathlib import Path
 from domain.translator import Translator
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
 
 class HtmlTranslator:
@@ -10,20 +10,12 @@ class HtmlTranslator:
         pass
 
     def translate(self, file: Path) -> str:
-        parser = HTMLParser()
         with open(file, mode="r", encoding="utf-8") as f:
             soup = BeautifulSoup(f, "html.parser")
         # Find all text elements in the HTML
-        for content, element in {
-            parser.parse(elm): elm
-            for elm in soup.find_all(["p", "li", "h1", "h2", "h3", "h4", "h5", "h6"])
-        }.items():
-            if (content) == "":
+        for node in tqdm(soup.find_all(text=True), leave=False):
+            if (node.get_text(strip=True)) == "":
                 continue
-            translated = self.translator.translate(content)
-            # print(f"ja: {content}")
-            # print("------------" * 2)
-            # print(f"en: {translated}")
-            # print("============" * 2)
-            parser.replace_parent_text(element, translated)
+            translated = self.translator.translate(node.get_text(strip=True))
+            node.replace_with(translated)
         return soup.prettify()
