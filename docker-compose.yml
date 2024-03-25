@@ -1,0 +1,10 @@
+version: '3'
+services:
+  poetrytest:
+    restart: always
+    build: .
+    container_name: 'llm-translator'
+    working_dir: "/app"
+    tty: true
+    volumes:
+      - ./samples:/app/samples
