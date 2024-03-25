@@ -10,12 +10,15 @@ class HtmlTranslator:
         pass
 
     def translate(self, file: Path) -> str:
-        with open(file, mode="r", encoding="utf-8") as f:
+        with open(file, mode="r", encoding="utf-8-sig") as f:
             soup = BeautifulSoup(f, "html.parser")
         # Find all text elements in the HTML
         for node in tqdm(soup.find_all(text=True), leave=False):
-            if (node.get_text(strip=True)) == "":
+            if node.parent.name in ["script", "style"]:
                 continue
+            if not node.get_text(strip=True):
+                continue
+
             translated = self.translator.translate(node.get_text(strip=True))
             node.replace_with(translated)
         return soup.prettify()
