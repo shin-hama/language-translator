@@ -1,7 +1,8 @@
-from application.translate_html import exec
+from argparse import ArgumentParser
 from logging import getLogger, StreamHandler, DEBUG
 
-from pathlib import Path
+from application.translate_html import exec
+
 
 logger = getLogger(__name__)
 handler = StreamHandler()
@@ -11,7 +12,14 @@ logger.addHandler(handler)
 logger.propagate = False
 
 if __name__ == "__main__":
-    # project_root = Path(__file__).parent.parent
-    # exec(project_root / "samples", logger)
-    root = Path(r"C:\Users\hamada\workspace\FEMTUS\InterfaceDesign\html")
-    exec(root, logger)
+    parser = ArgumentParser(
+        description="Translate HTML content from source language to target language."
+    )
+    parser.add_argument(
+        "--root",
+        type=str,
+        help="Root directory containing HTML files to translate.",
+        required=True,
+    )
+    args = parser.parse_args()
+    exec(args.root, logger)
