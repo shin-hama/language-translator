@@ -10,4 +10,4 @@ class Translator:
         self.model = MbartModel()
 
     def translate(self, text: str) -> str:
-        return self.model.translate(text)
+        return self.model.translate(text).strip()
