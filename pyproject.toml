@@ -15,11 +15,15 @@ sentencepiece = "^0.2.0"
 protobuf = "^5.26.0"
 tqdm = "^4.66.2"
 torch = "^2.2.1"
+lxml = "^5.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.2.0"
 flake8 = "^7.0.0"
+twine = "^5.0.0"
+keyring = "^25.0.0"
+artifacts-keyring = "^0.3.4"
 
 
 [build-system]
