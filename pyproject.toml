@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "language-translator"
+name = "llm_translator"
 version = "0.1.0"
 description = ""
 authors = ["shamada <shamada@jeol.co.jp>"]
@@ -16,6 +16,7 @@ protobuf = "^5.26.0"
 tqdm = "^4.66.2"
 torch = "^2.2.1"
 lxml = "^5.2.0"
+fire = "^0.6.0"
 
 
 [tool.poetry.group.dev.dependencies]
