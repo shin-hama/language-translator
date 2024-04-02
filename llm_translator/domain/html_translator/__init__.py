@@ -1,7 +1,8 @@
 from pathlib import Path
-from domain.translator import Translator
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+
+from llm_translator.domain.translator import Translator
 
 
 class HtmlTranslator:

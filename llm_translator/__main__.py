@@ -1,7 +1,7 @@
 import fire
 from logging import getLogger, StreamHandler, DEBUG
 
-from .application.translate_html import exec
+from llm_translator.application.translate_html import exec
 
 
 logger = getLogger(__name__)

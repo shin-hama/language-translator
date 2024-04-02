@@ -3,9 +3,9 @@ from pathlib import Path
 from typing import Optional
 
 from tqdm import tqdm
-from domain.html_translator import HtmlTranslator
-from domain.translator import Translator
-from domain.file_finder.html_finder import HtmlFinder
+from llm_translator.domain.html_translator import HtmlTranslator
+from llm_translator.domain.translator import Translator
+from llm_translator.domain.file_finder.html_finder import HtmlFinder
 
 
 def exec(root_dir: str | Path, logger: Optional[Logger]):

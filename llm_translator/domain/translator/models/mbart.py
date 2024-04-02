@@ -1,7 +1,7 @@
 from typing import Any
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
 
-from domain.translator.models.IModel import IModel
+from llm_translator.domain.translator.models.IModel import IModel
 
 
 MODEL_NAME = "facebook/mbart-large-50-many-to-many-mmt"
