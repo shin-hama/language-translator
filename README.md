@@ -5,7 +5,32 @@ LLM を使ったテキスト翻訳システム。
 
 ## Getting Started
 
-上から順番に簡単なやり方
+### パッケージをインストール
+
+#### GitHub からインストール
+
+1. [リリースページ](https://github.com/shamada4151/llm-translator/releases)からパッケージファイルをダウンロードしてインストール
+
+    ```shell
+    pip install llm_translator-0.1.0-py3-none-any.whl
+    ```
+
+#### PyPI からインストール
+
+Azure の [jeol-em-1g](https://jeol-em-1g.visualstudio.com/) にアクセスできる人はこちらも可能
+
+1. PAT を作成
+   1. 権限は Packaging の Read のみで良い
+2. 以下コマンドを実行
+   1. 尋ねられたら User と PAT を入力する
+
+    ```shell
+    pip install llm-translator --index-url https://jeol-em-1g.pkgs.visualstudio.com/Donau/_packaging/JEOL-PyPI/pypi/simple/
+    ```
+
+### ソースコードから実行
+
+<https://github.com/shamada4151/llm-translator> からソースコードを取得して以下の手順で実行
 
 ### docker
 
