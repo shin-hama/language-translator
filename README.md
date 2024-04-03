@@ -19,6 +19,7 @@ LLM を使ったテキスト翻訳システム。
 
     ```shell
     docker exec -it bash llm-translator
+    python -m llm_translator --version
     ```
 
 ### poetry を利用
@@ -31,6 +32,11 @@ LLM を使ったテキスト翻訳システム。
 
 2. 仮想環境を起動して実行
 
+    ```shell
+    poetry shell
+    python -m llm_translator --version
+    ```
+
 ### requirements.txt を利用
 
 1. 仮想環境を作成
@@ -38,6 +44,11 @@ LLM を使ったテキスト翻訳システム。
 
     ```shell
     pip install -r requirements.txt
+    pip install -e .
     ```
 
 3. 仮想環境を起動して実行
+
+    ```shell
+    .venv/Scripts/python -m llm_translator --version
+    ```

@@ -13,33 +13,58 @@ from llm_translator.domain.translator.xml_translator import XmlTranslator
 class TranslateService:
     def __init__(self, logger: Optional[Logger]):
         self.logger = logger
-        pass
 
     def translate_text(self, text: str) -> str:
         """Translate text from source language to target language."""
         translator = Translator(self.logger)
         return translator.translate(text)
 
-    def translate_files(self, root_dir: str) -> None:
+    def translate_file(self, file_path: str) -> None:
         """Translate HTML content from source language to target language."""
+        if self.logger is not None:
+            self.logger.info(f"Start translate files {file_path}")
+
         translator = Translator(self.logger)
 
+        file = Path(file_path)
+        translated = self._translate_file(file, translator)
+        if translated is None:
+            return
+
+        self._save_translated_file(
+            Path(file_path).with_suffix(f".en{file.suffix}"), translated
+        )
+
+    def translate_files(self, root_dir: str) -> None:
+        """Translate HTML content from source language to target language."""
         root = Path(root_dir)
 
         if self.logger is not None:
             self.logger.info(f"Start translate files in {root}")
 
+        translator = Translator(self.logger)
+
         for file in tqdm(FileFinder(root, ["*.html", "*.xml"]).get_all(), unit="files"):
-            if file.suffix == ".html":
-                translated = HtmlTranslator(translator).translate(file)
-            elif file.suffix == ".xml":
-                translated = XmlTranslator(translator).translate(file)
-            else:
-                print(f"Unsupported file type: {file.name}")
+            translated = self._translate_file(file, translator)
+            if translated is None:
                 continue
 
             # save translated text to file
-            newFile = root / "en" / file.relative_to(root)
-            newFile.parent.mkdir(parents=True, exist_ok=True)
+            new_file = root.parent / f"{root.name}.en" / file.relative_to(root)
+            self._save_translated_file(new_file, translated)
 
-            newFile.write_text(translated, encoding="utf-8")
+    def _translate_file(self, file: Path, translator: Translator) -> str | None:
+        """Translate text from source language to target language."""
+        if file.suffix == ".html":
+            return HtmlTranslator(translator).translate(file)
+        elif file.suffix == ".xml":
+            return XmlTranslator(translator).translate(file)
+        else:
+            print(f"Unsupported file type: {file.name}")
+            return None
+
+    def _save_translated_file(self, new_file: Path, translated: str) -> None:
+        """Save translated text to file."""
+        new_file.parent.mkdir(parents=True, exist_ok=True)
+
+        new_file.write_text(translated, encoding="utf-8")
