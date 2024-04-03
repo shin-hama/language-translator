@@ -7,6 +7,7 @@ from tqdm import tqdm
 from llm_translator.domain.html_translator import HtmlTranslator
 from llm_translator.domain.translator import Translator
 from llm_translator.domain.file_finder.html_finder import FileFinder
+from llm_translator.domain.translator.xml_translator import XmlTranslator
 
 
 class TranslateService:
@@ -21,14 +22,21 @@ class TranslateService:
 
     def translate_files(self, root_dir: str) -> None:
         """Translate HTML content from source language to target language."""
-        html_parser = HtmlTranslator(Translator(self.logger))
+        translator = Translator(self.logger)
+
         root = Path(root_dir)
 
         if self.logger is not None:
-            self.logger.info(f"Start translate html files in {root}")
+            self.logger.info(f"Start translate files in {root}")
 
-        for file in tqdm(FileFinder(root, "*.html").get_all(), unit="files"):
-            translated = html_parser.translate(file)
+        for file in tqdm(FileFinder(root, ["*.html", "*.xml"]).get_all(), unit="files"):
+            if file.suffix == ".html":
+                translated = HtmlTranslator(translator).translate(file)
+            elif file.suffix == ".xml":
+                translated = XmlTranslator(translator).translate(file)
+            else:
+                print(f"Unsupported file type: {file.name}")
+                continue
 
             # save translated text to file
             newFile = root / "en" / file.relative_to(root)

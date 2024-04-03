@@ -17,7 +17,7 @@ class XmlTranslator:
         for node in tqdm(
             soup.find_all(text=True),
             leave=False,
-            desc=soup.title.string if soup.title else None,
+            desc=file.name,
         ):
             text = node.get_text(strip=True)
             if not text:
