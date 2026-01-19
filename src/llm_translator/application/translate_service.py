@@ -44,7 +44,11 @@ class TranslateService:
 
         translator = Translator(self.logger)
 
-        for file in tqdm(FileFinder(root, ["*.html", "*.xml"]).get_all(), unit="files"):
+        files = FileFinder(root, ["*.html", "*.xml"]).get_all()
+
+        if self.logger is not None:
+            self.logger.info(f"Found {len(files)} files to translate.")
+        for file in tqdm(files, unit="files"):
             translated = self._translate_file(file, translator)
             if translated is None:
                 continue

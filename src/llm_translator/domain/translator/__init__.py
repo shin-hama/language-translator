@@ -12,5 +12,8 @@ class Translator:
             logger.info("Initialize Translator...")
         self.model = GemmaModel()
 
+        if logger is not None:
+            logger.info("Translator initialized.")
+
     def translate(self, texts: list[str]) -> list[str]:
         return self.model.translate(texts)
