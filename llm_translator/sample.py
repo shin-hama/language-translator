@@ -1,8 +1,12 @@
 from logging import getLogger, StreamHandler, DEBUG
 
+from dotenv import load_dotenv
 from pathlib import Path
 from domain.html_translator import HtmlTranslator
 from domain.translator import Translator
+
+
+load_dotenv()  # .envファイルを読み込む
 
 logger = getLogger(__name__)
 handler = StreamHandler()
@@ -15,7 +19,7 @@ logger.propagate = False
 if __name__ == "__main__":
     logger.info("Start translation sample")
     root_dir = Path("./samples")
-    file = Path(root_dir / "_index.html")
+    file = Path(root_dir / "index.html")
 
     result = HtmlTranslator(Translator(logger)).translate(file)
 
@@ -24,3 +28,5 @@ if __name__ == "__main__":
     newFile.parent.mkdir(parents=True, exist_ok=True)
 
     newFile.write_text(result, encoding="utf-8")
+
+    # result = Translator(logger).translate("これは日本語の文章です。")

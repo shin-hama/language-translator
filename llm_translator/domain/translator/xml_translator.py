@@ -26,16 +26,16 @@ class XmlTranslator:
             if not self._contains_japanese(text):
                 continue
 
-            translated = self.translator.translate(text)
-            node.replace_with(translated.strip().replace("\n", ""))
+            translated = self.translator.translate([text])
+            node.replace_with(translated[0].replace("\n", ""))
         return soup.prettify()
 
     def _contains_japanese(self, text: str) -> bool:
         for character in text:
             if (
-                "\u3040" <= character <= "\u309F"
-                or "\u30A0" <= character <= "\u30FF"
-                or "\u4E00" <= character <= "\u9FAF"
+                "\u3040" <= character <= "\u309f"
+                or "\u30a0" <= character <= "\u30ff"
+                or "\u4e00" <= character <= "\u9faf"
             ):
                 return True
         return False

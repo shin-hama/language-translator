@@ -17,7 +17,7 @@ class TranslateService:
     def translate_text(self, text: str) -> str:
         """Translate text from source language to target language."""
         translator = Translator(self.logger)
-        return translator.translate(text)
+        return translator.translate([text])[0]
 
     def translate_file(self, file_path: str) -> None:
         """Translate HTML content from source language to target language."""

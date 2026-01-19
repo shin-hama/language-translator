@@ -13,17 +13,11 @@ ENV TERM xterm
 
 RUN pip install --upgrade pip
 
-# Poetryのインストール
-RUN curl -sSL https://install.python-poetry.org | python -
+# uvのインストール
+RUN pip install uv
 
-# Poetryのパスの設定
-ENV PATH /root/.local/bin:$PATH
+COPY ./pyproject.toml ./uv.lock* ./
 
-# Poetryが仮想環境を生成しないようにする
-RUN poetry config virtualenvs.create false
+RUN uv sync --frozen
 
-COPY ./pyproject.toml ./poetry.lock* ./
-
-RUN poetry install
-
-COPY ./language_translator/ ./language_translator
+COPY ./llm_translator/ ./llm_translator
