@@ -19,6 +19,25 @@ class GemmaModel(IModel):
             batch_size=64,
         )
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cleanup()
+        return False
+
+    def cleanup(self):
+        if hasattr(self, "pipe"):
+            del self.pipe
+
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+
+        import gc
+
+        gc.collect()
+
     def translate(self, texts: list[str]) -> list[str]:
         def format_dataset(text: str):
             return [

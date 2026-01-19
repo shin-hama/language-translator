@@ -1,8 +1,7 @@
 from pathlib import Path
 from bs4 import BeautifulSoup
-from tqdm import tqdm
 
-from llm_translator.domain.translator import Translator
+from domain.translator import Translator
 
 
 class XmlTranslator:
@@ -13,12 +12,12 @@ class XmlTranslator:
     def translate(self, file: Path) -> str:
         with open(file, mode="r", encoding="utf-8-sig") as f:
             soup = BeautifulSoup(f, "lxml-xml")
-        # Find all text elements in the HTML
-        for node in tqdm(
-            soup.find_all(text=True),
-            leave=False,
-            desc=file.name,
-        ):
+
+        # Step 1: 翻訳が必要なテキストとノードのペアを収集
+        texts_to_translate = []
+        nodes_to_translate = []
+
+        for node in soup.find_all(text=True):
             text = node.get_text(strip=True)
             if not text:
                 continue
@@ -26,8 +25,17 @@ class XmlTranslator:
             if not self._contains_japanese(text):
                 continue
 
-            translated = self.translator.translate([text])
-            node.replace_with(translated[0].replace("\n", ""))
+            texts_to_translate.append(text)
+            nodes_to_translate.append(node)
+
+        # Step 2: バッチで翻訳を実行
+        if texts_to_translate:
+            translated_texts = self.translator.translate(texts_to_translate)
+
+            # Step 3: 翻訳結果でノードを置換
+            for node, translated in zip(nodes_to_translate, translated_texts):
+                node.replace_with(translated.strip().replace("\n", ""))
+
         return soup.prettify()
 
     def _contains_japanese(self, text: str) -> bool:

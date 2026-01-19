@@ -4,10 +4,10 @@ from typing import Optional
 
 from tqdm import tqdm
 
-from llm_translator.domain.html_translator import HtmlTranslator
-from llm_translator.domain.translator import Translator
-from llm_translator.domain.file_finder.html_finder import FileFinder
-from llm_translator.domain.translator.xml_translator import XmlTranslator
+from domain.html_translator import HtmlTranslator
+from domain.translator import Translator
+from domain.file_finder.html_finder import FileFinder
+from domain.translator.xml_translator import XmlTranslator
 
 
 class TranslateService:
