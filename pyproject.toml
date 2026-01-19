@@ -1,8 +1,10 @@
 [project]
 name = "llm_translator"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
-authors = ["shamada <shamada@jeol.co.jp>"]
+authors = [
+    {name = "shamada", email = "shamada@jeol.co.jp"},
+]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

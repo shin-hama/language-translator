@@ -14,7 +14,6 @@ class GemmaModel(IModel):
         self.pipe = pipeline(
             "image-text-to-text",
             model="google/translategemma-4b-it",
-            # device="cpu",
             device="cuda" if torch.cuda.is_available() else "cpu",
             dtype=torch.bfloat16,
             batch_size=64,
@@ -36,23 +35,11 @@ class GemmaModel(IModel):
                 }
             ]
 
-        # results = []
-        # for ouput in tqdm(
-        #     self.pipe(
-        #         text=data_generator(),  # type: ignore
-        #         max_new_tokens=200,
-        #         batch_size=64,
-        #     ),
-        #     total=len(texts),
-        # ):
-        #     results.append(ouput[0]["generated_text"][-1]["content"].strip())
-
-        # return results
-        results = self.pipe(
-            text=[format_dataset(text) for text in texts],  # type: ignore
-            max_new_tokens=200,
-            batch_size=64,
-        )
         return [
-            output[0]["generated_text"][-1]["content"].strip() for output in results
+            output[0]["generated_text"][-1]["content"].strip()
+            for output in self.pipe(
+                text=[format_dataset(text) for text in texts],  # type: ignore
+                max_new_tokens=200,
+                batch_size=64,
+            )
         ]
