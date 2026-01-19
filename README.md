@@ -77,3 +77,25 @@ Azure の [jeol-em-1g](https://jeol-em-1g.visualstudio.com/) にアクセスで�
     ```shell
     .venv/Scripts/python -m llm_translator --version
     ```
+
+## publish
+
+### 認証設定
+
+```shell
+# Pre-install keyring and the Artifacts plugin from the public PyPI
+uv tool install keyring --with artifacts-keyring
+
+# Enable keyring authentication
+export UV_KEYRING_PROVIDER=subprocess
+
+# Set the username for the index
+export UV_INDEX_PRIVATE_REGISTRY_USERNAME=VssSessionToken
+```
+
+### パッケージのビルドと公開
+
+```shell
+uv build
+uv publish --index JEOL-PyPI
+```

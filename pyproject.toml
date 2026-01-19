@@ -29,3 +29,11 @@ dev = [
     "keyring>=25.0.0",
     "artifacts-keyring>=0.3.4",
 ]
+
+[[tool.uv.index]]
+name = "JEOL-PyPI"
+url = "https://jeol-em-1g.pkgs.visualstudio.com/Donau/_packaging/JEOL-PyPI/pypi/"
+publish-url = "https://jeol-em-1g.pkgs.visualstudio.com/Donau/_packaging/JEOL-PyPI/pypi/upload/"
+
+[tool.uv]
+keyring-provider = "subprocess"

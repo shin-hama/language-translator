@@ -1,7 +1,7 @@
 from pathlib import Path
 from bs4 import BeautifulSoup
 
-from domain.translator import Translator
+from . import Translator
 
 
 class XmlTranslator:
