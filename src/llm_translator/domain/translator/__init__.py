@@ -1,6 +1,8 @@
 from logging import Logger
 from typing import Optional
 
+from llm_translator.domain.translator.models.model_base import ModelBase
+
 
 class Translator:
     def __init__(self, logger: Optional[Logger]):
@@ -10,7 +12,7 @@ class Translator:
 
         if logger is not None:
             logger.info("Initialize Translator...")
-        self.model = GemmaModel()
+        self.model: ModelBase = GemmaModel()
 
         if logger is not None:
             logger.info("Translator initialized.")

@@ -2,14 +2,14 @@ import os
 from transformers import pipeline
 import torch
 
-from .IModel import IModel
+from .model_base import ModelBase
 from huggingface_hub import login
 
 
 login(token=os.getenv("HUGGING_FACE_API_KEY"))
 
 
-class GemmaModel(IModel):
+class GemmaModel(ModelBase):
     def __init__(self):
         self.pipe = pipeline(
             "image-text-to-text",

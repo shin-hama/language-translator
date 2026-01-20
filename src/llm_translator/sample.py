@@ -2,8 +2,8 @@ from logging import getLogger, StreamHandler, DEBUG
 
 from dotenv import load_dotenv
 from pathlib import Path
-from domain.html_translator import HtmlTranslator
-from domain.translator import Translator
+from llm_translator.domain.html_translator import HtmlTranslator
+from llm_translator.domain.translator import Translator
 
 
 load_dotenv()  # .envファイルを読み込む
