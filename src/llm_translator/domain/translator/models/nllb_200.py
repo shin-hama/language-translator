@@ -1,25 +1,17 @@
-import os
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 
 from .model_base import ModelBase
-from huggingface_hub import login
-
-
-login(token=os.getenv("HUGGING_FACE_API_KEY"))
 
 
 class NLLBModel(ModelBase):
     def __init__(self):
-        self.pipe = pipeline(
-            "translation",
-            model="facebook/nllb-200-distilled-1.3B",
-            src_lang="jpn_Jpan",
-            tgt_lang="eng_Latn",
-            device="cuda" if torch.cuda.is_available() else "cpu",
-            dtype=torch.float16,
-        )
-        self.batch_size = self._get_optimal_batch_size()
+        model_name = "facebook/nllb-200-distilled-1.3B"
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenizer.src_lang = "jpn_Jpan"
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+        if torch.cuda.is_available():
+            self.model.to("cuda")
 
     def __enter__(self):
         return self
@@ -51,9 +43,6 @@ class NLLBModel(ModelBase):
             return 128
 
     def cleanup(self):
-        if hasattr(self, "pipe"):
-            del self.pipe
-
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
             torch.cuda.synchronize()
@@ -63,11 +52,38 @@ class NLLBModel(ModelBase):
         gc.collect()
 
     def translate(self, texts: list[str]) -> list[str]:
-        return [
-            output["translation_text"]
-            for output in self.pipe(
-                [text for text in texts],
-                max_new_tokens=200,
-                batch_size=self.batch_size,
+        results: list[str] = []
+        batch_size = self._get_optimal_batch_size()
+
+        for i in range(0, len(texts), batch_size):
+            batch_texts = texts[i : i + batch_size]
+
+            # バッチ処理用の入力準備
+            inputs = self.tokenizer(
+                batch_texts,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=512,
             )
-        ]
+
+            if torch.cuda.is_available():
+                inputs = {k: v.to("cuda") for k, v in inputs.items()}
+
+            with torch.no_grad():
+                translated_tokens = self.model.generate(
+                    **inputs,
+                    forced_bos_token_id=self.tokenizer.convert_tokens_to_ids(
+                        "eng_Latn"
+                    ),
+                    max_length=200,
+                    num_beams=4,
+                    early_stopping=True,
+                )
+
+            batch_results = self.tokenizer.batch_decode(
+                translated_tokens, skip_special_tokens=True
+            )
+            results.extend(batch_results)
+
+        return results

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+ <assembly>
+  <name>
+   ContainerContract
+  </name>
+ </assembly>
+ <members>
+  <member name="T:JEOL.FEMTUS.Base.ContainerContract.IContainerBase">
+   <summary>
+    Container base interface
+   </summary>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBase.IsRegistered(System.Type,System.String)">
+   <summary>
+    Determines whether an implemented type or instance is registered for the specified type.
+   </summary>
+   <param name="type">
+    Types to verify that they are registered
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents if there are multiple registrations for the specified type
+   </param>
+   <returns>
+    if you're registered
+    <see langword="true"/>
+    and if you don't
+    <see langword="false"/>
+    returns.
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBase.IsRegisteredTypeId(System.Guid)">
+   <summary>
+    Determines whether the type corresponding to the specified ID is registered
+   </summary>
+   <param name="id">
+    Type of ID to verify that you are registered
+   </param>
+   <returns>
+    if you're registered
+    <see langword="true"/>
+    and if you don't
+    <see langword="false"/>
+    returns.
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBase.IsRegisteredInstanceId(System.Guid)">
+   <summary>
+    Determines whether an instance corresponding to the specified ID is registered
+   </summary>
+   <param name="id">
+    ID of the instance to verify that you are registered
+   </param>
+   <returns>
+    if you're registered
+    <see langword="true"/>
+    and if you don't
+    <see langword="false"/>
+    returns.
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBase.IsRegisteredViewMap(System.Type,System.String)">
+   <summary>
+    Determines whether the corresponding relationship of Model-ViewModel-View is registered
+   </summary>
+   <param name="model">
+    Model types of MVVM patterns
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents if there are multiple registrations for the specified type
+   </param>
+   <returns>
+    if you're registered
+    <see langword="true"/>
+    and if you don't
+    <see langword="false"/>
+    returns.
+   </returns>
+  </member>
+  <member name="T:JEOL.FEMTUS.Base.ContainerContract.IContainerBaseExtensions">
+   <summary>
+    <see cref="T:JEOL.FEMTUS.Base.ContainerContract.IContainerBase"/>
+    extensions.
+   </summary>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBaseExtensions.IsRegistered``1(JEOL.FEMTUS.Base.ContainerContract.IContainerBase,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBase.IsRegistered(System.Type,System.String)"/>
+   <typeparam name="T">
+    Types to verify that they are registered
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBaseExtensions.IsRegisteredViewMap``1(JEOL.FEMTUS.Base.ContainerContract.IContainerBase,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerBase.IsRegisteredViewMap(System.Type,System.String)"/>
+   <typeparam name="TModel">
+    Types to verify that they are registered
+   </typeparam>
+  </member>
+  <member name="T:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider">
+   <summary>
+    Interface to Resolve Service from Container
+   </summary>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.Resolve(System.Type,System.String)">
+   <summary>
+    Get instances associated with the specified type
+   </summary>
+   <param name="type">
+    Types to solve
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents if there are multiple registrations for the specified type
+   </param>
+   <returns>
+    solved instances
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.ResolveAll(System.Type)">
+   <summary>
+    Gets all instances associated with the specified type
+   </summary>
+   <param name="type">
+    Types to solve
+   </param>
+   <returns>
+    solved instances
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.ResolveTypeId(System.Guid)">
+   <summary>
+    Get a type associated with the specified ID
+   </summary>
+   <param name="id">
+    Type ID
+   </param>
+   <returns>
+    Solved type
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.ResolveInstanceId(System.Guid)">
+   <summary>
+    Get instances associated with the specified ID
+   </summary>
+   <param name="id">
+    ID for instance
+   </param>
+   <returns>
+    solved instances
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.ResolveViewModel(System.Object,System.String)">
+   <summary>
+    Get the ViewModel associated with the specified Model
+    <para>
+     Generate and return instances.
+    </para>
+    <para>
+     If the ViewModel constructor requests a Model as an argument, pass the Model of this method argument.
+    </para>
+   </summary>
+   <param name="model">
+    Models of MVVM patterns
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents if there are multiple registrations for the specified type
+   </param>
+   <returns>
+    ViewModel of MVVM patterns
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.ResolveView(System.Object,System.String)">
+   <summary>
+    Get the View associated with the specified ViewModel
+    <para>
+     Generate and return instances.
+    </para>
+    <para>
+     If the View constructor requests the ViewModel as an argument, pass the ViewModel of this method argument.
+    </para>
+   </summary>
+   <param name="viewModel">
+    MVVM Pattern ViewModel
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents if there are multiple registrations for the specified type
+   </param>
+   <returns>
+    MVVM Pattern View
+   </returns>
+  </member>
+  <member name="T:JEOL.FEMTUS.Base.ContainerContract.IContainerProviderExtensions">
+   <summary>
+    <see cref="T:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider"/>
+    extensions.
+   </summary>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProviderExtensions.Resolve``1(JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.Resolve(System.Type,System.String)"/>
+   <typeparam name="T">
+    Types to solve
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProviderExtensions.ResolveAll``1(JEOL.FEMTUS.Base.ContainerContract.IContainerProvider)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerProvider.ResolveAll(System.Type)"/>
+   <typeparam name="T">
+    Types to solve
+   </typeparam>
+  </member>
+  <member name="T:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry">
+   <summary>
+    Interface to Register Service to Container
+   </summary>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterInstance(System.Type,System.Object,System.String)">
+   <summary>
+    Connect a specified instance to a specified type and register it in a container
+    <para>
+     Resolve Sometimes the same instance is returned every time.
+    </para>
+    <para>
+     Container holds the instance reference.
+    </para>
+   </summary>
+   <param name="type">
+    Types to Register
+   </param>
+   <param name="instance">
+    An instance that binds to a type
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents for multiple registrations for the specified type
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterSingleton(System.Type,System.Type,System.String)">
+   <summary>
+    Connect the specified implementation type to the specified type and register the lifecycle (scope) as Singleton in the container
+    <para>
+     Resolve Sometimes the same instance is returned every time.
+    </para>
+    <para>
+     Container holds the instance reference.
+    </para>
+   </summary>
+   <param name="from">
+    Types to Register
+   </param>
+   <param name="to">
+    Implementation type that connects to the type
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents for multiple registrations for the specified type
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterSingleton(System.Type,System.Func{JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,System.Object},System.String)">
+   <summary>
+    Connect the specified factory method to the specified type and register the lifecycle (scope) as Singleton in the container
+    <para>
+     Resolve Sometimes the instance generated by the factory method is returned.
+    </para>
+    <para>
+     Resolve Sometimes the same instance is returned every time.
+    </para>
+    <para>
+     Container holds the instance reference.
+    </para>
+   </summary>
+   <param name="type">
+    Types to Register
+   </param>
+   <param name="factoryMethod">
+    A factory method to generate instances that relate to a type
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents for multiple registrations for the specified type
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.Register(System.Type,System.Type,System.String)">
+   <summary>
+    Connect the specified implementation type to the specified type and register the lifecycle (scope) as a Transient in the container
+    <para>
+     Resolve Sometimes a new instance is generated and returned each time.
+    </para>
+    <para>
+     The container does not hold the instance reference.
+    </para>
+   </summary>
+   <param name="from">
+    Types to Register
+   </param>
+   <param name="to">
+    Implementation type that connects to the type
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents for multiple registrations for the specified type
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.Register(System.Type,System.Func{JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,System.Object},System.String)">
+   <summary>
+    Attach the specified factory method to the specified type and register the lifecycle (scope) as a Transient in the container
+    <para>
+     Resolve Sometimes the instance generated by the factory method is returned.
+    </para>
+    <para>
+     Resolve Sometimes a new instance is generated and returned each time.
+    </para>
+    <para>
+     The container does not hold the instance reference.
+    </para>
+   </summary>
+   <param name="type">
+    Types to Register
+   </param>
+   <param name="factoryMethod">
+    A factory method to generate instances that relate to a type
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents for multiple registrations for the specified type
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterTypeId(System.Guid,System.Type)">
+   <summary>
+    Connect the specified type to the specified ID and register it in the container
+   </summary>
+   <param name="id">
+    Type ID
+   </param>
+   <param name="type">
+    Type to attach to ID
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterInstanceId(System.Guid,System.Object)">
+   <summary>
+    Attach the specified instance to the specified ID and register the lifecycle (scope) as a Transient in the container
+    <para>
+     The container holds the weak reference of the instance, so be careful that the registered instance is GC unless it is strongly referenced.
+    </para>
+   </summary>
+   <param name="id">
+    Type ID
+   </param>
+   <param name="instance">
+    Instance to attach to ID
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterViewMap(System.Type,System.Type,System.Type,System.String)">
+   <summary>
+    Register the corresponding relationship of Model-ViewModel-View
+    <para>
+     You cannot register the same type multiple times: If either Model, ViewModel, or View is already registered, the registration will fail.
+    </para>
+    <para>
+     Only symbols can be registered; abstracts and interfaces cannot be registered.
+    </para>
+   </summary>
+   <param name="model">
+    Model types of MVVM patterns
+   </param>
+   <param name="viewModel">
+    Models of ViewModel in MVVM Patterns
+   </param>
+   <param name="view">
+    Type of View for MVVM Patterns
+   </param>
+   <param name="name">
+    Name (key) to identify the registration contents for multiple registrations for the specified type
+   </param>
+   <returns>
+    Container
+   </returns>
+  </member>
+  <member name="T:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions">
+   <summary>
+    <see cref="T:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry"/>
+    extensions.
+   </summary>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.RegisterInstance``1(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,``0,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterInstance(System.Type,System.Object,System.String)"/>
+   <typeparam name="T">
+    Types to Register
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.RegisterSingleton``2(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterSingleton(System.Type,System.Type,System.String)"/>
+   <typeparam name="TFrom">
+    Types to Register
+   </typeparam>
+   <typeparam name="TTo">
+    Implementation type that connects to the type
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.RegisterSingleton``1(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,System.Func{JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,``0},System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterSingleton(System.Type,System.Func{JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,System.Object},System.String)"/>
+   <typeparam name="T">
+    Types to Register
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.Register``2(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.Register(System.Type,System.Type,System.String)"/>
+   <typeparam name="TFrom">
+    Types to Register
+   </typeparam>
+   <typeparam name="TTo">
+    Implementation type that connects to the type
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.Register``1(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,System.Func{JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,``0},System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.Register(System.Type,System.Func{JEOL.FEMTUS.Base.ContainerContract.IContainerProvider,System.Object},System.String)"/>
+   <typeparam name="T">
+    Types to Register
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.RegisterTypeId``1(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,System.Guid)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterTypeId(System.Guid,System.Type)"/>
+   <typeparam name="T">
+    Type to attach to ID
+   </typeparam>
+  </member>
+  <member name="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistryExtensions.RegisterViewMap``3(JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry,System.String)">
+   <inheritdoc cref="M:JEOL.FEMTUS.Base.ContainerContract.IContainerRegistry.RegisterViewMap(System.Type,System.Type,System.Type,System.String)"/>
+   <typeparam name="TModel">
+    Model types of MVVM patterns
+   </typeparam>
+   <typeparam name="TViewModel">
+    Models of ViewModel in MVVM Patterns
+   </typeparam>
+   <typeparam name="TView">
+    Type of View for MVVM Patterns
+   </typeparam>
+  </member>
+ </members>
+</doc>
