@@ -29,4 +29,5 @@ if __name__ == "__main__":
 
     newFile.write_text(result, encoding="utf-8")
 
-    # result = Translator(logger).translate("これは日本語の文章です。")
+    # result = Translator(logger).translate(["これは日本語の文章です。"])
+    # print(result)

@@ -8,7 +8,7 @@ from logging import getLogger, StreamHandler, DEBUG
 from importlib import metadata
 from typing import Optional
 
-from .application import TranslateService
+from llm_translator.application import TranslateService
 
 
 load_dotenv()  # .envファイルを読み込む
